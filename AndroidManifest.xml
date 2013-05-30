@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="org.nutrika"
+      android:versionCode="1" android:versionName="0.2alpha">
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+<uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+<uses-sdk android:minSdkVersion="11" android:targetSdkVersion="17"></uses-sdk>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <application android:icon="@drawable/icon" android:label="@string/appName" android:allowBackup="true">
+        <activity android:name="FrontPage"
+                  android:label="@string/appName">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="Contents" android:label="@string/contentsTitle"></activity>
+        <activity android:name="Foods" android:label="@string/foodTitle"></activity>
+        <activity android:name="Products" android:label="@string/productsTitle"></activity>
+        <activity android:name="Plan" android:label="@string/planTitle"></activity>
+        <activity android:name="Settings" android:label="@string/settingsTitle"></activity>
+        <activity android:name="EditProduct" android:label="@string/editProductTitle"></activity>
+        <activity android:name="EditIngredient" android:label="@string/editIngredientTitle"></activity>
+        <activity android:name="Timing" android:label="@string/planProductTitle"></activity>
+    </application>
+</manifest>

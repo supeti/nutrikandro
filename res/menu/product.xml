@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/showProductContents" android:title="@string/showContents"></item>
+    <item android:id="@+id/planProduct" android:title="@string/plan"></item>
+    <item android:id="@+id/editProduct" android:title="@string/editProductLabel"></item>
+    <item android:id="@+id/deleteProduct" android:title="@string/deleteProductLabel"></item>
+</menu>

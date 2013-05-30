@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent" android:orientation="vertical" android:layout_gravity="center">
+    <ImageView android:layout_width="wrap_content" android:src="@drawable/icon" android:layout_height="wrap_content" android:layout_gravity="center|center_horizontal" android:contentDescription="@string/appIcon"></ImageView>
+    <Button android:layout_height="wrap_content" android:text="@string/settings" android:gravity="center" android:layout_width="match_parent" android:id="@+id/settings"></Button>
+    <Button android:layout_height="wrap_content" android:id="@+id/foods" android:layout_width="match_parent" android:text="@string/foodItems"></Button>
+    <Button android:id="@+id/products" android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/products"></Button>
+    <Button android:id="@+id/plan" android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/plan"></Button>
+    <ImageView android:layout_width="wrap_content" android:src="@drawable/icon" android:layout_height="wrap_content" android:layout_gravity="center" android:contentDescription="@string/appIcon"></ImageView>
+</LinearLayout>

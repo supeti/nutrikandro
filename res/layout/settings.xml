@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent" android:orientation="vertical">
+    <LinearLayout android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:layout_width="match_parent">
+        <TextView android:text="@string/lifeStageGroupLabel" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+        <Spinner android:id="@+id/lifeStageGroupSpin" android:layout_height="wrap_content" android:layout_width="match_parent"></Spinner>
+    </LinearLayout>
+    <TextView android:id="@+id/agetv" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/ageLabel"></TextView>
+    <SeekBar android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/agesb"></SeekBar>
+    <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout3" android:layout_height="wrap_content">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/weightLabel" android:id="@+id/eaterweight"></TextView>
+    </LinearLayout>
+    <SeekBar android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/weightSB"></SeekBar>
+    <LinearLayout android:id="@+id/linearLayout2" android:layout_width="match_parent" android:layout_height="wrap_content" style="android:attr/buttonBarStyle">
+        <Button android:layout_weight="1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/ok" android:id="@+id/settingsOK" style="?android:attr/buttonBarButtonStyle"></Button>
+        <Button android:layout_weight="1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/settingsCancel" android:text="@string/cancel" style="?android:attr/buttonBarButtonStyle"></Button>
+    </LinearLayout>
+</LinearLayout>

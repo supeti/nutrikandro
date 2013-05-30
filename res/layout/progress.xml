@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" 
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+    <ImageView android:layout_width="wrap_content" android:id="@+id/imageView1" android:src="@drawable/icon" android:layout_height="wrap_content" android:layout_gravity="center" android:contentDescription="@string/appIcon"></ImageView>
+    <TextView android:layout_height="wrap_content" android:text="@string/downloadingRef" android:id="@+id/progress_text" android:layout_width="wrap_content" android:layout_gravity="center"></TextView>
+	<ProgressBar android:layout_height="wrap_content" style="@android:style/Widget.ProgressBar.Horizontal"
+		android:layout_marginRight="5dp" android:id="@+id/progress" android:indeterminate="false" android:layout_width="match_parent" android:progress="0"/>
+</LinearLayout>
