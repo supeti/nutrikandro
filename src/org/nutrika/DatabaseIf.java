@@ -70,7 +70,8 @@ public enum DatabaseIf {
 	private final String productsLikeQS = "SELECT _id,name,price FROM user.products WHERE name like ? ORDER BY name;";
 	private final String productContentsQS = "SELECT nutr_data.nutr_no AS _id,nutrdesc||':'||Round(Sum(nutr_val*amount*0.01),dec)" + 
 	"||units||ifnull(', EAR:'||Round(Sum(nutr_val*amount/ear),1)||'%','')||ifnull(', RDA:'||Round(Sum(nutr_val*amount/rda),1)||'%','') " +
-	"||ifnull(', AI:'||Round(Sum(nutr_val*amount/ai),1)||'%','')||ifnull(', UL:'||Round(Sum(nutr_val*amount/ul),1)||'%','') AS data " +
+	"||ifnull(', AI:'||Round(Sum(nutr_val*amount/ai),1)||'%','')||ifnull(', UL:'||Round(Sum(nutr_val*amount/ul),1)||'%','')" +
+	"||ifnull(', PD:'||coalesce(Round(price*100/Sum(nutr_val*amount/rda),2),Round(price*100/Sum(nutr_val*amount/ai),2)),'') AS data " +
 	"FROM nutr_data JOIN nutr_def ON nutr_data.nutr_no=nutr_def._id JOIN ingredients USING(ndb_no) " + 
 	"JOIN products ON ingredients.product=products._id LEFT OUTER JOIN " +
 	"(SELECT nutr_no,lsg,min_age,max_age,ear,rda,ai,ul FROM dri UNION " +
@@ -96,7 +97,9 @@ public enum DatabaseIf {
 		"Round(Sum(nutr_val*amount*quantity/(ear*days)),1)||'%','')||ifnull(', RDA:'||" + 
 		"Round(Sum(nutr_val*amount*quantity/(rda*days)),1)||'%','') " +
 		"||ifnull(', AI:'||Round(Sum(nutr_val*amount*quantity/(ai*days)),1)||'%','')||" + 
-		"ifnull(', UL:'||Round(Sum(nutr_val*amount*quantity/(ul*days)),1)||'%','') AS data " +
+		"ifnull(', UL:'||Round(Sum(nutr_val*amount*quantity/(ul*days)),1)||'%','')" +
+		"||ifnull(', PD:'||coalesce(Round(Sum(price*quantity*100*(rda*days))/Sum(nutr_val*amount*quantity),2)," +
+		"Round(Sum(price*quantity*100*(ai*days))/Sum(nutr_val*amount*quantity),2)),'') AS data " +
  		"FROM plan JOIN products ON products._id=plan.product JOIN ingredients ON ingredients.product=products._id " + 
 		"JOIN nutr_data USING(ndb_no) JOIN nutr_def ON nutr_data.nutr_no=nutr_def._id LEFT OUTER JOIN " +
 		"(SELECT nutr_no,lsg,min_age,max_age,ear,rda,ai,ul FROM dri UNION " +
@@ -236,7 +239,8 @@ public enum DatabaseIf {
 	public void updateproduct(Double price) {
 		ContentValues cv = new ContentValues();
 		cv.put("price", price);
-		db.update("user.product", cv, "_id=?", new String[] { String.valueOf(productId) });
+		db.update("user.products", cv, "_id=?", new String[] { String.valueOf(productId) });
+		productPrice = price;
 	}
 
 	public Cursor ingredient() {

@@ -31,9 +31,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnFocusChangeListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -46,6 +46,7 @@ public class EditProduct extends Activity {
 	TextView title;
 	EditText price;
 	Button addItem, showContents;
+	ImageButton savePrice;
 	double priceval;
 
 	@Override
@@ -56,7 +57,8 @@ public class EditProduct extends Activity {
     	registerForContextMenu(ingredients);
     	title = (TextView) findViewById(R.id.editProductTitle);
     	price = (EditText) findViewById(R.id.editProductPrice);
-    	price.setOnFocusChangeListener(new SavePriceCallBack());
+    	savePrice = (ImageButton) findViewById(R.id.savePrice);
+    	savePrice.setOnClickListener(new SavePriceCallBack());
     	addItem = (Button) findViewById(R.id.addProductItem);
     	addItem.setOnClickListener(new AddProductItemCallBack());
     	showContents = (Button) findViewById(R.id.showEditProductContents);
@@ -117,10 +119,10 @@ public class EditProduct extends Activity {
 		}
 	}
 
-	class SavePriceCallBack implements OnFocusChangeListener {
-		public void onFocusChange(View editor, boolean hasFocus) {
+	class SavePriceCallBack implements OnClickListener {
+		public void onClick(View v) {
 			double p = Double.valueOf(price.getText().toString()).doubleValue();
-			if (!hasFocus && priceval!=p) db.updateproduct(p);
+			db.updateproduct(p);
 		}
 	}
 	
