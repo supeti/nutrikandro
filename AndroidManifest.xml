@@ -22,6 +22,6 @@
         <activity android:name="Settings" android:label="@string/settingsTitle"></activity>
         <activity android:name="EditProduct" android:label="@string/editProductTitle"></activity>
         <activity android:name="EditIngredient" android:label="@string/editIngredientTitle"></activity>
-        <activity android:name="Timing" android:label="@string/planProductTitle"></activity>
+        <activity android:name="EditPlanItem" android:label="@string/planItemTitle"></activity>
     </application>
 </manifest>

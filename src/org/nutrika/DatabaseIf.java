@@ -90,8 +90,6 @@ public enum DatabaseIf {
 	private final String planQS = "SELECT plan._id,plan.quantity,products.name " + 
 		"FROM user.plan JOIN user.products ON plan.product=products._id " + 
 		"ORDER BY products.name;";
-	private final String planIdQS = "SELECT plan._id,plan.quantity,products.name " + 
-		"FROM user.plan JOIN user.products ON plan.product=products._id WHERE plan._id=?;";
 	private final String planContentsQS = "SELECT nutr_data.nutr_no AS _id,nutrdesc||':'||" +
 		"Round(Sum(nutr_val*amount*0.01*quantity),dec)||units||ifnull(', EAR:'||" + 
 		"Round(Sum(nutr_val*amount*quantity/(ear*days)),1)||'%','')||ifnull(', RDA:'||" + 
@@ -284,10 +282,6 @@ public enum DatabaseIf {
 
 	public Cursor plan() {
 		return db.rawQuery(planQS, new String[] { });
-	}
-
-	public Cursor planId() {
-		return db.rawQuery(planIdQS, new String[] { String.valueOf(planId) });
 	}
 
 	public void rmPlanItem(long id) {

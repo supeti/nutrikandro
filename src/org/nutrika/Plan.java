@@ -80,10 +80,10 @@ public class Plan extends Activity {
 		switch (item.getItemId()) {
 		case R.id.editPlanItem:
 			db.planId = info.id;
-//			Intent intent = new Intent(context, Timing.class);
-//			intent.putExtra(Timing.EXTRA_TARGET, Timing.TARGET_MEAL);
-//			intent.putExtra(Timing.EXTRA_DBMODE, Timing.DBMODE_UPDATE);
-//			startActivity(intent);
+			Intent intent = new Intent(context, EditPlanItem.class);
+			intent.putExtra(EditPlanItem.QUANTITY, ((TextView)info.targetView.findViewById(R.id.planItemQuantity)).getText().toString());
+			intent.putExtra(EditPlanItem.NAME, ((TextView)info.targetView.findViewById(R.id.planItemName)).getText().toString());
+			startActivity(intent);
 			return true;
 		case R.id.removePlanItem:
 			db.rmPlanItem(info.id);

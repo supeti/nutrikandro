@@ -24,6 +24,8 @@
     <string name="itemLabel">Item: </string>
     <string name="lifeStageGroupLabel">Life Stage Group</string>
     <string name="likeLabel">Like: </string>
+    <string name="planItemTitle">Plan Item</string>
+    <string name="planItemName">plan item name</string>
     <string name="products">Products</string>
     <string name="productsTitle">Nutrika - Products </string>
     <string name="price">Price:</string>
