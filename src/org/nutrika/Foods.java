@@ -31,6 +31,7 @@ import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -70,6 +71,10 @@ public class Foods extends Activity {
 		foods = (ListView) findViewById(R.id.foods);
 		foods.setAdapter(foodsCA);
     	registerForContextMenu(foods);
+		Button button = (Button) findViewById(R.id.products);
+		button.setOnClickListener(new ProductsCallBack());
+		button = (Button) findViewById(R.id.plan);
+		button.setOnClickListener(new PlanCallBack());
 	}
 
 	public void onResume() {
@@ -159,4 +164,16 @@ public class Foods extends Activity {
 		}
 	}
 
+	class ProductsCallBack implements OnClickListener {
+		public void onClick(View v) {
+			Intent intent = new Intent(context, Products.class);
+			startActivity(intent);
+		}
+	}
+	class PlanCallBack implements OnClickListener {
+		public void onClick(View v) {
+			Intent intent = new Intent(context, Plan.class);
+			startActivity(intent);
+		}
+	}
 }

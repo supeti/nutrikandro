@@ -3,6 +3,13 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" android:clickable="false">
+
+<LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content"  style="?android:attr/buttonBarButtonStyle">
+    <Button android:id="@+id/settings" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/settings" style="?android:attr/buttonBarButtonStyle"></Button>
+    <Button android:id="@+id/products" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/products"  style="?android:attr/buttonBarButtonStyle"></Button>
+    <Button android:id="@+id/plan" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/plan"  style="?android:attr/buttonBarButtonStyle"></Button>
+</LinearLayout>
+
 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
     <TextView android:text="@string/foodGroup" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
     <Spinner android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/foodGroup"></Spinner>
