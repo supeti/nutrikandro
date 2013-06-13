@@ -25,20 +25,20 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 public class Products extends Activity {
 	Context context = this;
@@ -65,6 +65,12 @@ public class Products extends Activity {
 		products = (ListView) findViewById(R.id.products);
 		products.setAdapter(productsCA);
     	registerForContextMenu(products);
+		Button button = (Button) findViewById(R.id.settings);
+		button.setOnClickListener(new SettingsCallBack());
+		button = (Button) findViewById(R.id.foods);
+		button.setOnClickListener(new FoodsCallBack());
+		button = (Button) findViewById(R.id.plan);
+		button.setOnClickListener(new PlanCallBack());
 	}
 
 	@Override
@@ -142,4 +148,24 @@ public class Products extends Activity {
 		}
 	}
 
+    class SettingsCallBack implements OnClickListener {
+		public void onClick(View v) {
+			Intent intent = new Intent(context, Settings.class);
+			startActivity(intent);
+		}
+	}
+
+	class FoodsCallBack implements OnClickListener {
+		public void onClick(View v) {
+			Intent intent = new Intent(context, Foods.class);
+			startActivity(intent);
+		}
+	}
+
+	class PlanCallBack implements OnClickListener {
+		public void onClick(View v) {
+			Intent intent = new Intent(context, Plan.class);
+			startActivity(intent);
+		}
+	}
 }

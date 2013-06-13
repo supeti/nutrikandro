@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" android:clickable="false">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:clickable="false">
+	<LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content"  style="?android:attr/buttonBarButtonStyle">
+	    <Button style="?android:attr/buttonBarButtonStyle" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/settings" android:id="@+id/settings"></Button>
+	    <Button style="?android:attr/buttonBarButtonStyle" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/foodItems" android:id="@+id/foods"></Button>
+	    <Button style="?android:attr/buttonBarButtonStyle" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/plan" android:id="@+id/plan"></Button>
+	</LinearLayout>
     <LinearLayout android:id="@+id/linearLayout1" android:layout_width="match_parent" android:layout_height="wrap_content">
         <EditText android:inputType="text" android:layout_width="0dip" android:layout_height="wrap_content" android:layout_weight="1" android:id="@+id/productET"></EditText>
         <ImageButton android:layout_width="wrap_content" android:src="@android:drawable/ic_menu_search" android:id="@+id/selectProduct" android:layout_height="match_parent" android:contentDescription="@string/searchImage"></ImageButton>

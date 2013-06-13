@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -29,6 +30,11 @@ import android.os.Environment;
 
 public enum DatabaseIf {
 	INSTANCE;
+	SharedPreferences settings;
+	private final String PREF_LSG = "life stage group";
+	private final String PREF_AGE = "age";
+	private final String PREF_WEIGHT = "weight";
+	private final String PREF_DAYS = "days";
 	
 	public enum ContentsOf {
 		FOOD, PRODUCT, PLAN
@@ -40,7 +46,7 @@ public enum DatabaseIf {
 	public int USER_SIZE = 8192;
 	private SQLiteDatabase db;
 
-	public long lifeStageGroupId = 3;
+	public long lifeStageGroupId = 2;
 	public long age = 33;
 	public long weight = 70;
 	public long days = 7;
@@ -185,7 +191,7 @@ public enum DatabaseIf {
 		case FOOD: 
 			return new String("100g of " + foodDesc + " contains:");
 		case PRODUCT:
-			return new String("one " + productName + " contains:");
+			return new String(productName + " contains:");
 		case PLAN:
 			return new String("The " + days + "-day plan contains:");
 		}
@@ -287,4 +293,22 @@ public enum DatabaseIf {
 	public void rmPlanItem(long id) {
 		productId = db.delete("user.plan", "_id=?", new String[] { String.valueOf(id) });
 	}
+	
+	public void savePreferences() {
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putLong(PREF_LSG, lifeStageGroupId);
+		editor.putLong(PREF_AGE, age);
+		editor.putLong(PREF_WEIGHT, weight);
+		editor.putLong(PREF_DAYS, days);
+		editor.commit();
+	}
+
+	public void loadPreferences(SharedPreferences prefs) {
+		settings = prefs;
+	    lifeStageGroupId = settings.getLong(PREF_LSG, 2);
+	    age = settings.getLong(PREF_AGE, 33);
+	    weight = settings.getLong(PREF_WEIGHT, 70);
+	    days = settings.getLong(PREF_DAYS, 7);
+	}
+
 }

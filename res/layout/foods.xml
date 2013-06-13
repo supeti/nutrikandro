@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" android:clickable="false">
-
-<LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content"  style="?android:attr/buttonBarButtonStyle">
-    <Button android:id="@+id/settings" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/settings" style="?android:attr/buttonBarButtonStyle"></Button>
-    <Button android:id="@+id/products" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/products"  style="?android:attr/buttonBarButtonStyle"></Button>
-    <Button android:id="@+id/plan" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/plan"  style="?android:attr/buttonBarButtonStyle"></Button>
-</LinearLayout>
-
-<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-    <TextView android:text="@string/foodGroup" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-    <Spinner android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/foodGroup"></Spinner>
-</LinearLayout>
-<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/likeLabel"></TextView>
-    <EditText android:inputType="text" android:layout_height="wrap_content" android:id="@+id/foodLike" android:layout_width="0dip" android:layout_weight="1"></EditText>
-    <ImageButton android:id="@+id/selectFood" android:src="@android:drawable/ic_menu_search" android:layout_width="wrap_content" android:layout_height="match_parent" android:contentDescription="@string/searchImage"></ImageButton>
-</LinearLayout>
-<ListView android:layout_width="match_parent" android:id="@+id/foods" android:layout_height="wrap_content"></ListView>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:clickable="false">
+	<LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content"  style="?android:attr/buttonBarButtonStyle">
+	    <Button style="?android:attr/buttonBarButtonStyle" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/settings" android:id="@+id/settings"></Button>
+	    <Button style="?android:attr/buttonBarButtonStyle" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/products" android:id="@+id/products"></Button>
+	    <Button style="?android:attr/buttonBarButtonStyle" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/plan" android:id="@+id/plan"></Button>
+	</LinearLayout>
+	<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+	    <TextView android:text="@string/foodGroup" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+	    <Spinner android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/foodGroup"></Spinner>
+	</LinearLayout>
+	<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+	    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/likeLabel"></TextView>
+	    <EditText android:inputType="text" android:layout_height="wrap_content" android:id="@+id/foodLike" android:layout_width="0dip" android:layout_weight="1"></EditText>
+	    <ImageButton android:id="@+id/selectFood" android:src="@android:drawable/ic_menu_search" android:layout_width="wrap_content" android:layout_height="match_parent" android:contentDescription="@string/searchImage"></ImageButton>
+	</LinearLayout>
+	<ListView android:layout_width="match_parent" android:id="@+id/foods" android:layout_height="wrap_content"></ListView>
 </LinearLayout>

@@ -56,7 +56,6 @@
         <item>g</item>
         <item>oz</item>
     </string-array>
-        <string name="planProductTitle">Nutrika - Plan Product</string>
-        <string name="planProducts">Plan Products</string>
-        <string name="quantity">Quantity: </string>
+    <string name="quantity">Quantity: </string>
+    <string name="daysLabel">Plan length in days:</string>
 </resources>

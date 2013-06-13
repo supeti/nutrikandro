@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent" android:orientation="vertical">
-    <TextView android:textIsSelectable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/planTitle"></TextView>
-    <LinearLayout android:layout_height="wrap_content" android:id="@+id/linearLayout1" android:layout_width="match_parent" android:orientation="horizontal" style="android:attr/buttonBarStyle">
-        <Button android:layout_height="wrap_content" android:layout_weight="1" android:layout_width="wrap_content" android:id="@+id/planProducts" android:text="@string/planProducts" style="?android:attr/buttonBarButtonStyle"></Button>
-        <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/showContents" android:id="@+id/showPlanContents" android:layout_weight="1" style="?android:attr/buttonBarButtonStyle"></Button>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
+	<LinearLayout android:layout_height="wrap_content" android:id="@+id/linearLayout1" android:layout_width="match_parent" android:orientation="horizontal" style="android:attr/buttonBarStyle">
+	    <Button style="?android:attr/buttonBarButtonStyle" android:layout_height="wrap_content" android:layout_weight="1" android:layout_width="wrap_content" android:text="@string/settings" android:id="@+id/settings"></Button>
+	    <Button style="?android:attr/buttonBarButtonStyle" android:layout_height="wrap_content" android:layout_weight="1" android:layout_width="wrap_content" android:text="@string/foodItems" android:id="@+id/foods"></Button>
+        <Button style="?android:attr/buttonBarButtonStyle" android:layout_height="wrap_content" android:layout_weight="1" android:layout_width="wrap_content" android:text="@string/products" android:id="@+id/products"></Button>
+        <Button style="?android:attr/buttonBarButtonStyle" android:layout_height="wrap_content" android:layout_weight="1" android:layout_width="wrap_content" android:text="@string/showContents" android:id="@+id/showPlanContents"></Button>
     </LinearLayout>
+    <TextView android:textIsSelectable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/planTitle"></TextView>
     <ListView android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/plandProducts" android:choiceMode="singleChoice"></ListView>
 </LinearLayout>

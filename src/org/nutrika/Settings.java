@@ -25,12 +25,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
 
 public class Settings extends Activity {
@@ -43,6 +44,7 @@ public class Settings extends Activity {
 	String ageunit = "-year old";
 	TextView weightTV;
 	SeekBar weightsb;
+	EditText daysET;
 	long lsg, age, weight;
 	int minages[] = {0, 1, 9, 9, 14, 14};
 	int maxagesb[] = {12, 8, 92, 92, 36, 36};
@@ -66,6 +68,7 @@ public class Settings extends Activity {
 	    weightTV = (TextView) findViewById(R.id.eaterweight);
 	    weightsb = (SeekBar) findViewById(R.id.weightSB);
 	    weightsb.setOnSeekBarChangeListener(new WeightSBCallBack());
+	    daysET = (EditText) findViewById(R.id.days);
 	    
 		lsg = db.lifeStageGroupId - 1;
 		age = db.age;
@@ -77,6 +80,7 @@ public class Settings extends Activity {
 	    weightTV.setText("Weight: " + String.valueOf(weight) + "kg = " + String.valueOf(weight*2) + "lb");
 	    weightsb.setProgress((int) weight - 1);
 	    weightsb.setMax(120);
+	    daysET.setText(String.valueOf(db.days));
 
 		Button button = (Button) findViewById(R.id.settingsOK);
 		button.setOnClickListener(new OKCallBack());
@@ -147,6 +151,8 @@ public class Settings extends Activity {
 			db.lifeStageGroupId = lsg + 1;
 			db.age = age;
 			db.weight = weight;
+			db.days = Long.valueOf(daysET.getText().toString());
+			db.savePreferences();
 			setResult(RESULT_OK);
 			finish();
 		}

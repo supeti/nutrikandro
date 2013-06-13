@@ -25,22 +25,22 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class Plan extends Activity {
 	Context context = this;
 	DatabaseIf db = DatabaseIf.INSTANCE;
 	TextView title;
-	Button planProducts, showContents;
+	Button products, showContents;
 	ListView plan;
 	SimpleCursorAdapter planCA;
 
@@ -49,8 +49,12 @@ public class Plan extends Activity {
 		setContentView(R.layout.plan);
 
     	title = (TextView) findViewById(R.id.planTitle);
-    	planProducts = (Button) findViewById(R.id.planProducts);
-    	planProducts.setOnClickListener(new PlanProductsCallBack());
+		Button button = (Button) findViewById(R.id.settings);
+		button.setOnClickListener(new SettingsCallBack());
+		button = (Button) findViewById(R.id.foods);
+		button.setOnClickListener(new FoodsCallBack());
+		button = (Button) findViewById(R.id.products);
+		button.setOnClickListener(new ProductsCallBack());
     	showContents = (Button) findViewById(R.id.showPlanContents);
     	showContents.setOnClickListener(new ShowContentsCallBack());
 
@@ -60,7 +64,7 @@ public class Plan extends Activity {
 
 	public void onResume() {
 		super.onResume();
-		title.setText("Plan");
+		title.setText("The "+db.days+"-day plan:");
 		Cursor cur = db.plan();
 		int[] viewIDs = new int[] { R.id.planItemQuantity, R.id.planItemName };
 		planCA = new SimpleCursorAdapter(this, R.layout.planitem, cur, db.planDataColumns, viewIDs, 0);
@@ -95,7 +99,14 @@ public class Plan extends Activity {
 		}
 	}
 
-	class PlanProductsCallBack implements OnClickListener {
+    class SettingsCallBack implements OnClickListener {
+		public void onClick(View v) {
+			Intent intent = new Intent(context, Settings.class);
+			startActivity(intent);
+		}
+	}
+
+    class ProductsCallBack implements OnClickListener {
 		public void onClick(View v) {
 			Intent intent = new Intent(context, Products.class);
 			startActivity(intent);
@@ -110,4 +121,10 @@ public class Plan extends Activity {
 		}
 	}
 
+	class FoodsCallBack implements OnClickListener {
+		public void onClick(View v) {
+			Intent intent = new Intent(context, Foods.class);
+			startActivity(intent);
+		}
+	}
 }

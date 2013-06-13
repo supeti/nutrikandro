@@ -25,20 +25,20 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
-import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
 
 public class Foods extends Activity {
@@ -71,7 +71,9 @@ public class Foods extends Activity {
 		foods = (ListView) findViewById(R.id.foods);
 		foods.setAdapter(foodsCA);
     	registerForContextMenu(foods);
-		Button button = (Button) findViewById(R.id.products);
+		Button button = (Button) findViewById(R.id.settings);
+		button.setOnClickListener(new SettingsCallBack());
+		button = (Button) findViewById(R.id.products);
 		button.setOnClickListener(new ProductsCallBack());
 		button = (Button) findViewById(R.id.plan);
 		button.setOnClickListener(new PlanCallBack());
@@ -82,7 +84,6 @@ public class Foods extends Activity {
 	}
 	
 	public void onDestroy() {
-		//foodGroupsCur.close();
 		foodsCur.close();
 		super.onDestroy();
 	}
@@ -117,11 +118,10 @@ public class Foods extends Activity {
 		}
 	}
 
-	class FoodGroupCallBack implements OnItemSelectedListener {
+    class FoodGroupCallBack implements OnItemSelectedListener {
 		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 			db.foodGroupId = id;
 			foodsCur = db.foods();
-			//startManagingCursor(cur);
 			foodsCA.changeCursor(foodsCur);
 			foodLike.setText("");
 		}
@@ -133,7 +133,6 @@ public class Foods extends Activity {
 	class SelectFoodCallBack implements OnClickListener {
 		public void onClick(View v) {
 			foodsCur = db.foodsLike(foodLike.getText().toString());
-			//startManagingCursor(cur);
 			foodsCA.changeCursor(foodsCur);
 		}
 	}
@@ -164,13 +163,21 @@ public class Foods extends Activity {
 		}
 	}
 
-	class ProductsCallBack implements OnClickListener {
+    class SettingsCallBack implements OnClickListener {
+		public void onClick(View v) {
+			Intent intent = new Intent(context, Settings.class);
+			startActivity(intent);
+		}
+	}
+
+    class ProductsCallBack implements OnClickListener {
 		public void onClick(View v) {
 			Intent intent = new Intent(context, Products.class);
 			startActivity(intent);
 		}
 	}
-	class PlanCallBack implements OnClickListener {
+
+    class PlanCallBack implements OnClickListener {
 		public void onClick(View v) {
 			Intent intent = new Intent(context, Plan.class);
 			startActivity(intent);

@@ -22,13 +22,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.net.URLConnection;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.zip.GZIPInputStream;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,14 +47,8 @@ import android.widget.TextView;
 public class FrontPage extends Activity {
 	Context context = this;
 	DatabaseIf db = DatabaseIf.INSTANCE;
-	SharedPreferences settings;
 	String foodGroup;
 	ProgressBar pb;
-
-	private final String PREF_LSG = "life stage group";
-	private final String PREF_AGE = "age";
-	private final String PREF_WEIGHT = "weight";
-	private final int REQUEST_SETTING = 1;
 
 	public void onDBReady() {
         db.open();
@@ -96,13 +96,7 @@ public class FrontPage extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	    settings = getPreferences(MODE_PRIVATE);
-	    db.lifeStageGroupId = settings.getLong(PREF_LSG, 2);
-	    db.age = settings.getLong(PREF_AGE, 33);
-	    db.weight = settings.getLong(PREF_WEIGHT, 70);
-		Log.d("lifeStageGroupId=", String.valueOf(db.lifeStageGroupId));
-		Log.d("age=", String.valueOf(db.age));
-		Log.d("weight=", String.valueOf(db.weight));
+		db.loadPreferences(getPreferences(MODE_PRIVATE));
 		if (db.checkRefDB()) {
 			onRefReady();
 		} else {
@@ -113,19 +107,6 @@ public class FrontPage extends Activity {
 		}
     }
     
-    @Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	if (REQUEST_SETTING == requestCode && RESULT_OK == resultCode) {
-    		Log.d("onActivityResult RESULT_OK lsg=", String.valueOf(db.lifeStageGroupId));
-    		SharedPreferences.Editor editor = settings.edit();
-    		editor.putLong(PREF_LSG, db.lifeStageGroupId);
-    		editor.putLong(PREF_AGE, db.age);
-    		editor.putLong(PREF_WEIGHT, db.weight);
-    		editor.commit();
-    	}
-		super.onActivityResult(requestCode, resultCode, data);
-	}
-
 	class DownloadRefTask extends AsyncTask<Void, Integer, Void> {
     	String error = null;
 
@@ -133,7 +114,14 @@ public class FrontPage extends Activity {
     		InputStream input = null;
     		FileOutputStream output = null;
     		try {
-    			URLConnection ucon = new URL("http://sourceforge.net/p/nutrikandro/code/ci/5fb6cf6898ca59f8fe983d11baed923e64ab5338/tree/nutrika.db.gz?format=raw").openConnection();
+    			KeyStore keyStore = null;
+    			TrustManagerFactory tmf = TrustManagerFactory.getInstance("X509");
+    			tmf.init(keyStore);
+    			SSLContext context = SSLContext.getInstance("TLS");
+    			context.init(null, tmf.getTrustManagers(), null);
+    			URL url = new URL("https://docs.google.com/uc?id=0B8R75YhXzNxecFlTdXVlTW1XMmc&export=download");
+    			HttpsURLConnection ucon = (HttpsURLConnection) url.openConnection();
+    			ucon.setSSLSocketFactory(context.getSocketFactory());
     			input = ucon.getInputStream();
     			output = new FileOutputStream(db.REFGZ_NAME);
     			byte[] buffer = new byte[65536];
@@ -148,7 +136,13 @@ public class FrontPage extends Activity {
     			output.close();
     		} catch (IOException e) {
     			error = e.getClass().getCanonicalName() + ": " + e.getMessage();
-    		}
+    		} catch (NoSuchAlgorithmException e) {
+    			error = e.getClass().getCanonicalName() + ": " + e.getMessage();
+			} catch (KeyStoreException e) {
+    			error = e.getClass().getCanonicalName() + ": " + e.getMessage();
+			} catch (KeyManagementException e) {
+    			error = e.getClass().getCanonicalName() + ": " + e.getMessage();
+			}
 			return null;
         }
 
@@ -244,21 +238,24 @@ public class FrontPage extends Activity {
     class SettingsCallBack implements OnClickListener {
 		public void onClick(View v) {
 			Intent intent = new Intent(context, Settings.class);
-			startActivityForResult(intent, REQUEST_SETTING);
+			startActivity(intent);
 		}
 	}
+
 	class FoodsCallBack implements OnClickListener {
 		public void onClick(View v) {
 			Intent intent = new Intent(context, Foods.class);
 			startActivity(intent);
 		}
 	}
+
 	class ProductsCallBack implements OnClickListener {
 		public void onClick(View v) {
 			Intent intent = new Intent(context, Products.class);
 			startActivity(intent);
 		}
 	}
+
 	class PlanCallBack implements OnClickListener {
 		public void onClick(View v) {
 			Intent intent = new Intent(context, Plan.class);
