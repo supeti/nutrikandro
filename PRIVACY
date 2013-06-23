@@ -1,0 +1,15 @@
+Nutrika (the nutrient calculator and analyzer software) is intended to do 
+generic calculation regarding diet, recommendended intakes, and price/value 
+ratios. It gathers and saves data only to help calculations by organizing 
+information (food amount and price) for people of choosen life stage group, 
+age, and weight. The user's data is stored in the SQLite database file: 
+"/mnt/sdcard/nutrika/user.db". You may delete this file if you do not need or 
+want it any more. It will be recreated empty next time you start Nutrika.
+
+Nutrika does not disclose data using network connections. However, anyone or 
+anything with access to the device can retrieve the data stored in the 
+memory of the device.
+
+Nutrika is not designed for any other purpose than the one above, and it is 
+not recommended to use it any other way like storing sensitive personal or 
+business information.
