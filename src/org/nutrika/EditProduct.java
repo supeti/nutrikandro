@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
@@ -50,58 +49,59 @@ public class EditProduct extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-	    super.onCreate(savedInstanceState);
-    	setContentView(R.layout.editproduct);
-    	ingredients = (ListView) findViewById(R.id.ingredients);
-    	registerForContextMenu(ingredients);
-    	title = (TextView) findViewById(R.id.editProductTitle);
-    	price = (EditText) findViewById(R.id.editProductPrice);
-    	savePrice = (ImageButton) findViewById(R.id.savePrice);
-    	savePrice.setOnClickListener(new SavePriceCallBack());
-    	addItem = (Button) findViewById(R.id.addProductItem);
-    	addItem.setOnClickListener(new AddProductItemCallBack());
-    	showContents = (Button) findViewById(R.id.showEditProductContents);
-    	showContents.setOnClickListener(new ShowContentsCallBack());
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.editproduct);
+		ingredients = (ListView) findViewById(R.id.ingredients);
+		registerForContextMenu(ingredients);
+		title = (TextView) findViewById(R.id.editProductTitle);
+		price = (EditText) findViewById(R.id.editProductPrice);
+		savePrice = (ImageButton) findViewById(R.id.savePrice);
+		savePrice.setOnClickListener(new SavePriceCallBack());
+		addItem = (Button) findViewById(R.id.addProductItem);
+		addItem.setOnClickListener(new AddProductItemCallBack());
+		showContents = (Button) findViewById(R.id.showEditProductContents);
+		showContents.setOnClickListener(new ShowContentsCallBack());
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		title.setText(db.productName);
+		title.setText(db.getProductName());
 		price.setText(Double.toString(db.loadProductPrice()));
-    	Cursor cur = db.loadIngredients();
-        int[] viewIDs = new int[]{R.id.contentsitem};
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.contentsitem, cur, db.ingredientsDataColumns, viewIDs, 0);
-        ingredients.setAdapter(adapter);
+		Cursor cur = db.loadIngredients();
+		int[] viewIDs = new int[] { R.id.contentsitem };
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.contentsitem, cur,
+				db.ingredientsDataColumns, viewIDs, 0);
+		ingredients.setAdapter(adapter);
 	}
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-	  super.onCreateContextMenu(menu, v, menuInfo);
-	  MenuInflater inflater = getMenuInflater();
-	  inflater.inflate(R.menu.editproduct, menu);
+		super.onCreateContextMenu(menu, v, menuInfo);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.editproduct, menu);
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-	  AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-	  switch (item.getItemId()) {
-	  case R.id.editIngredient:
-		  db.ingredientId = info.id;
-		  Log.d("ingredientId=", String.valueOf(info.id));
-		  Intent intent = new Intent(context, EditIngredient.class);
-		  startActivity(intent);
-	    return true;
-	  case R.id.removeIngredient:
-		db.rmIngredient(info.id);
-		Cursor cur = db.loadIngredients();
-		((SimpleCursorAdapter) ingredients.getAdapter()).changeCursor(cur);
-	    return true;
-	  default:
-	    return super.onContextItemSelected(item);
-	  }
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+		switch (item.getItemId()) {
+		case R.id.editIngredient:
+			db.setIngredientId(info.id);
+			//Log.d("ingredientId=", String.valueOf(info.id));
+			Intent intent = new Intent(context, EditIngredient.class);
+			startActivity(intent);
+			return true;
+		case R.id.removeIngredient:
+			db.rmIngredient(info.id);
+			Cursor cur = db.loadIngredients();
+			((SimpleCursorAdapter) ingredients.getAdapter()).changeCursor(cur);
+			return true;
+		default:
+			return super.onContextItemSelected(item);
+		}
 	}
-	
+
 	class AddProductItemCallBack implements OnClickListener {
 		public void onClick(View v) {
 			Intent intent = new Intent(context, Foods.class);
@@ -123,5 +123,5 @@ public class EditProduct extends Activity {
 			db.updateproduct(p);
 		}
 	}
-	
+
 }

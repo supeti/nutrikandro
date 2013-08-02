@@ -93,15 +93,14 @@ public class Foods extends Activity {
 	  super.onCreateContextMenu(menu, v, menuInfo);
 	  MenuInflater inflater = getMenuInflater();
 	  inflater.inflate(R.menu.foods, menu);
-	  if (db.productId != 0) menu.findItem(R.id.addToProduct).setEnabled(true);
+	  if (db.isProductSelected()) menu.findItem(R.id.addToProduct).setEnabled(true);
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		Intent intent;
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-		db.foodItemId = info.id;
-		db.foodDesc = ((TextView) info.targetView).getText();
+		db.setFoodItem(info.id, ((TextView) info.targetView).getText());
 		switch (item.getItemId()) {
 		case R.id.showFoodContents:
 			db.contentsOf = ContentsOf.FOOD;
@@ -120,7 +119,7 @@ public class Foods extends Activity {
 
     class FoodGroupCallBack implements OnItemSelectedListener {
 		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-			db.foodGroupId = id;
+			db.setFoodGroupId(id);
 			foodsCur = db.loadFoods();
 			foodsCA.changeCursor(foodsCur);
 			foodLike.setText("");
@@ -155,8 +154,7 @@ public class Foods extends Activity {
 
 	class FoodItemCallBack implements OnItemSelectedListener {
 		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-			db.foodItemId = id;
-			db.foodDesc = ((TextView) view).getText();
+			db.setFoodItem(id, ((TextView) view).getText());
 		}
 
 		public void onNothingSelected(AdapterView<?> arg0) {

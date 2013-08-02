@@ -21,7 +21,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -46,10 +45,10 @@ public class Settings extends Activity {
 	SeekBar weightsb;
 	EditText daysET;
 	long lsg, age, weight;
-	int minages[] = {0, 1, 9, 9, 14, 14};
-	int maxagesb[] = {12, 8, 92, 92, 36, 36};
+	int minages[] = { 0, 1, 9, 9, 14, 14 };
+	int maxagesb[] = { 12, 8, 92, 92, 36, 36 };
 	boolean first;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -57,30 +56,30 @@ public class Settings extends Activity {
 		ArrayAdapter<CharSequence> adapter;
 
 		lifeStageGroup = (Spinner) findViewById(R.id.lifeStageGroupSpin);
-	    adapter = ArrayAdapter.createFromResource(this, R.array.lifestagegroups, android.R.layout.simple_spinner_item);
-	    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-	    lifeStageGroup.setAdapter(adapter);
-	    lifeStageGroup.setOnItemSelectedListener(new LifeStageGroupCallBack());
-	    
-	    ageTV = (TextView) findViewById(R.id.agetv);
-	    agesb = (SeekBar) findViewById(R.id.agesb);
-	    agesb.setOnSeekBarChangeListener(new AgeSBCallBack());
-	    weightTV = (TextView) findViewById(R.id.eaterweight);
-	    weightsb = (SeekBar) findViewById(R.id.weightSB);
-	    weightsb.setOnSeekBarChangeListener(new WeightSBCallBack());
-	    daysET = (EditText) findViewById(R.id.days);
-	    
-		lsg = db.lifeStageGroupId - 1;
-		age = db.age;
-		weight = db.weight;
-	    lifeStageGroup.setSelection((int) lsg);
-	    ageTV.setText(agetext((int) age));
-	    agesb.setProgress(age2progress(age,lsg));
-	    agesb.setMax(maxagesb[(int) lsg]);
-	    weightTV.setText("Weight: " + String.valueOf(weight) + "kg = " + String.valueOf(weight*2) + "lb");
-	    weightsb.setProgress((int) weight - 1);
-	    weightsb.setMax(120);
-	    daysET.setText(String.valueOf(db.days));
+		adapter = ArrayAdapter.createFromResource(this, R.array.lifestagegroups, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		lifeStageGroup.setAdapter(adapter);
+		lifeStageGroup.setOnItemSelectedListener(new LifeStageGroupCallBack());
+
+		ageTV = (TextView) findViewById(R.id.agetv);
+		agesb = (SeekBar) findViewById(R.id.agesb);
+		agesb.setOnSeekBarChangeListener(new AgeSBCallBack());
+		weightTV = (TextView) findViewById(R.id.eaterweight);
+		weightsb = (SeekBar) findViewById(R.id.weightSB);
+		weightsb.setOnSeekBarChangeListener(new WeightSBCallBack());
+		daysET = (EditText) findViewById(R.id.days);
+
+		lsg = db.getLifeStageGroupId();
+		age = db.getAge();
+		weight = db.getWeight();
+		lifeStageGroup.setSelection((int) lsg);
+		ageTV.setText(agetext(age));
+		agesb.setProgress(age2progress(age, lsg));
+		agesb.setMax(maxagesb[(int) lsg]);
+		weightTV.setText("Weight: " + String.valueOf(weight) + "kg = " + String.valueOf(weight * 2) + "lb");
+		weightsb.setProgress((int) weight - 1);
+		weightsb.setMax(120);
+		daysET.setText(db.getDays());
 
 		Button button = (Button) findViewById(R.id.settingsOK);
 		button.setOnClickListener(new OKCallBack());
@@ -91,18 +90,15 @@ public class Settings extends Activity {
 
 	class LifeStageGroupCallBack implements OnItemSelectedListener {
 		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-			Log.d("id=", String.valueOf(id));
-			Log.d("pos=", String.valueOf(position));
-			Log.d("db.lifeStageGroupId=", String.valueOf(db.lifeStageGroupId));
 			if (lsg != id) {
 				lsg = id;
-				if (0 == lsg) ageunit = "-month old";
-				else ageunit = "-year old";
+				ageunit = (0 == lsg) ? "-month old" : "-year old";
 				int max = maxagesb[(int) lsg];
-			    agesb.setMax(max);
-			    int progress = age2progress(age, lsg);
-			    if (0>progress || progress>=max) progress = max / 3;
-			    agesb.setProgress(progress);
+				agesb.setMax(max);
+				int progress = age2progress(age, lsg);
+				if (0 > progress || progress >= max)
+					progress = max / 3;
+				agesb.setProgress(progress);
 				ageTV.setText(agetext(progress2age(progress, lsg)));
 			}
 		}
@@ -110,15 +106,16 @@ public class Settings extends Activity {
 		public void onNothingSelected(AdapterView<?> arg0) {
 		}
 	}
-	
 
 	class AgeSBCallBack implements OnSeekBarChangeListener {
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 			age = progress2age(progress, lsg);
 			ageTV.setText(agetext(age));
 		}
+
 		public void onStartTrackingTouch(SeekBar seekBar) {
 		}
+
 		public void onStopTrackingTouch(SeekBar seekBar) {
 		}
 	}
@@ -126,14 +123,16 @@ public class Settings extends Activity {
 	class WeightSBCallBack implements OnSeekBarChangeListener {
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 			weight = progress + 1;
-		    weightTV.setText("Weight: " + String.valueOf(weight) + "kg = " + String.valueOf(weight*2) + "lb");
+			weightTV.setText("Weight: " + String.valueOf(weight) + "kg = " + String.valueOf(weight * 2) + "lb");
 		}
+
 		public void onStartTrackingTouch(SeekBar seekBar) {
 		}
+
 		public void onStopTrackingTouch(SeekBar seekBar) {
 		}
 	}
-	
+
 	private int age2progress(long age, long lsg) {
 		return (int) age - minages[(int) lsg];
 	}
@@ -141,24 +140,20 @@ public class Settings extends Activity {
 	private int progress2age(int progress, long lsg) {
 		return progress + minages[(int) lsg];
 	}
-	
+
 	private String agetext(long age) {
 		return "Age: " + String.valueOf(age) + ageunit;
 	}
 
-    class OKCallBack implements OnClickListener {
+	class OKCallBack implements OnClickListener {
 		public void onClick(View v) {
-			db.lifeStageGroupId = lsg + 1;
-			db.age = age;
-			db.weight = weight;
-			db.days = Long.valueOf(daysET.getText().toString());
-			db.savePreferences();
+			db.savePreferences(lsg, age, weight, daysET.getText().toString());
 			setResult(RESULT_OK);
 			finish();
 		}
 	}
 
-    class CancelCallBack implements OnClickListener {
+	class CancelCallBack implements OnClickListener {
 		public void onClick(View v) {
 			setResult(RESULT_CANCELED);
 			finish();

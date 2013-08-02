@@ -45,21 +45,22 @@ public class EditIngredient extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-	    super.onCreate(savedInstanceState);
-    	setContentView(R.layout.editingredient);
-    	title = (TextView) findViewById(R.id.editIngredientTitle);
-    	units = (Spinner) findViewById(R.id.editIngredientUnit);
-    	ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ingredientUnits, android.R.layout.simple_spinner_item);
-	    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-	    units.setAdapter(adapter);
-	    units.setOnItemSelectedListener(new UnitsCallBack());
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.editingredient);
+		title = (TextView) findViewById(R.id.editIngredientTitle);
+		units = (Spinner) findViewById(R.id.editIngredientUnit);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ingredientUnits,
+				android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		units.setAdapter(adapter);
+		units.setOnItemSelectedListener(new UnitsCallBack());
 
-	    amount = (EditText) findViewById(R.id.editIngredientWeight);
-    	ok = (Button) findViewById(R.id.editIngredientOK);
-    	ok.setOnClickListener(new OKCallBack());
-    	cancel = (Button) findViewById(R.id.editIngredientCancel);
-    	cancel.setOnClickListener(new CancelCallBack());
-    	
+		amount = (EditText) findViewById(R.id.editIngredientWeight);
+		ok = (Button) findViewById(R.id.editIngredientOK);
+		ok.setOnClickListener(new OKCallBack());
+		cancel = (Button) findViewById(R.id.editIngredientCancel);
+		cancel.setOnClickListener(new CancelCallBack());
+
 	}
 
 	@Override
@@ -81,13 +82,10 @@ public class EditIngredient extends Activity {
 		public void onNothingSelected(AdapterView<?> arg0) {
 		}
 	}
-	
+
 	class OKCallBack implements OnClickListener {
 		public void onClick(View v) {
-			float q;
-			if (0 == unit) q = Float.valueOf(amount.getText().toString());
-			else q = Float.valueOf(amount.getText().toString()) * oz2g;
-			db.updateIngredient(q);
+			db.updateIngredient(Float.valueOf(amount.getText().toString()) * (0 == unit ? 1 : oz2g));
 			finish();
 		}
 	}

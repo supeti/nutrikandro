@@ -62,7 +62,7 @@ public class Products extends Activity {
 		productsCA = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cur, db.productsDataColumns, viewIDs, 0);
 		products = (ListView) findViewById(R.id.products);
 		products.setAdapter(productsCA);
-    	registerForContextMenu(products);
+		registerForContextMenu(products);
 		Button button = (Button) findViewById(R.id.settings);
 		button.setOnClickListener(new SettingsCallBack());
 		button = (Button) findViewById(R.id.foods);
@@ -78,17 +78,16 @@ public class Products extends Activity {
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-	  super.onCreateContextMenu(menu, v, menuInfo);
-	  MenuInflater inflater = getMenuInflater();
-	  inflater.inflate(R.menu.product, menu);
+		super.onCreateContextMenu(menu, v, menuInfo);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.product, menu);
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		Intent intent;
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-		db.productId = info.id;
-		db.productName = ((TextView) info.targetView).getText();
+		db.setProduct(info.id, ((TextView) info.targetView).getText());
 		switch (item.getItemId()) {
 		case R.id.showProductContents:
 			db.contentsOf = ContentsOf.PRODUCT;
@@ -127,24 +126,17 @@ public class Products extends Activity {
 			productsCA.changeCursor(cur);
 		}
 	}
-/*	
-	class ProductsCallBack implements OnItemSelectedListener {
-		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-			db.productId = id;
-			if (null == view) 
-				db.productName = "null view";
-			else
-				db.productName = ((TextView) view).getText();
-		}
 
-		public void onNothingSelected(AdapterView<?> parent) {
-			db.productId = -1;
-			db.productName = null;
-			db.productPrice = 0.0;
-		}
-	}
-*/
-    class SettingsCallBack implements OnClickListener {
+	/*
+	 * class ProductsCallBack implements OnItemSelectedListener { public void
+	 * onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+	 * db.productId = id; if (null == view) db.productName = "null view"; else
+	 * db.productName = ((TextView) view).getText(); }
+	 * 
+	 * public void onNothingSelected(AdapterView<?> parent) { db.productId = -1;
+	 * db.productName = null; db.productPrice = 0.0; } }
+	 */
+	class SettingsCallBack implements OnClickListener {
 		public void onClick(View v) {
 			Intent intent = new Intent(context, Settings.class);
 			startActivity(intent);
