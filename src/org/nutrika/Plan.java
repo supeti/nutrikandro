@@ -65,7 +65,7 @@ public class Plan extends Activity {
 	public void onResume() {
 		super.onResume();
 		title.setText("The "+db.days+"-day plan:");
-		Cursor cur = db.plan();
+		Cursor cur = db.loadPlan();
 		int[] viewIDs = new int[] { R.id.planItemQuantity, R.id.planItemName };
 		planCA = new SimpleCursorAdapter(this, R.layout.planitem, cur, db.planDataColumns, viewIDs, 0);
 		plan.setAdapter(planCA);
@@ -91,7 +91,7 @@ public class Plan extends Activity {
 			return true;
 		case R.id.removePlanItem:
 			db.rmPlanItem(info.id);
-			Cursor cur = db.plan();
+			Cursor cur = db.loadPlan();
 			((SimpleCursorAdapter) plan.getAdapter()).changeCursor(cur);
 			return true;
 		default:

@@ -30,9 +30,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -59,7 +57,7 @@ public class Products extends Activity {
 		addProductBn = (ImageButton) findViewById(R.id.addProduct);
 		addProductBn.setOnClickListener(new AddProductCallBack());
 
-		Cursor cur = db.products();
+		Cursor cur = db.loadProducts();
 		int[] viewIDs = new int[] { android.R.id.text1 };
 		productsCA = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cur, db.productsDataColumns, viewIDs, 0);
 		products = (ListView) findViewById(R.id.products);
@@ -125,20 +123,18 @@ public class Products extends Activity {
 
 	class SelectProductCallBack implements OnClickListener {
 		public void onClick(View v) {
-			Cursor cur = db.productsLike(productsET.getText().toString());
+			Cursor cur = db.loadProductsLike(productsET.getText().toString());
 			productsCA.changeCursor(cur);
 		}
 	}
-	
+/*	
 	class ProductsCallBack implements OnItemSelectedListener {
 		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 			db.productId = id;
 			if (null == view) 
 				db.productName = "null view";
 			else
-			{
 				db.productName = ((TextView) view).getText();
-			}
 		}
 
 		public void onNothingSelected(AdapterView<?> parent) {
@@ -147,7 +143,7 @@ public class Products extends Activity {
 			db.productPrice = 0.0;
 		}
 	}
-
+*/
     class SettingsCallBack implements OnClickListener {
 		public void onClick(View v) {
 			Intent intent = new Intent(context, Settings.class);

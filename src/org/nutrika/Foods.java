@@ -54,7 +54,7 @@ public class Foods extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.foods);
-		Cursor foodGroupsCur = db.foodGroups();
+		Cursor foodGroupsCur = db.loadFoodGroups();
 		int[] viewIDs = new int[] { android.R.id.text1 };
 		final SimpleCursorAdapter ca = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, foodGroupsCur,
 				db.foodGroupsDataColumns, viewIDs, 0);
@@ -65,7 +65,7 @@ public class Foods extends Activity {
 		foodLike = (EditText) findViewById(R.id.foodLike);
 		ImageButton ib = (ImageButton) findViewById(R.id.selectFood);
 		ib.setOnClickListener(new SelectFoodCallBack());
-		foodsCur = db.foodsLike("");
+		foodsCur = db.loadFoods();
 		viewIDs = new int[] { android.R.id.text1 };
 		foodsCA = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, foodsCur, db.foodDescDataColumns, viewIDs, 0);
 		foods = (ListView) findViewById(R.id.foods);
@@ -121,7 +121,7 @@ public class Foods extends Activity {
     class FoodGroupCallBack implements OnItemSelectedListener {
 		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 			db.foodGroupId = id;
-			foodsCur = db.foods();
+			foodsCur = db.loadFoods();
 			foodsCA.changeCursor(foodsCur);
 			foodLike.setText("");
 		}
@@ -132,7 +132,7 @@ public class Foods extends Activity {
 
 	class SelectFoodCallBack implements OnClickListener {
 		public void onClick(View v) {
-			foodsCur = db.foodsLike(foodLike.getText().toString());
+			foodsCur = db.loadFoodsLike(foodLike.getText().toString());
 			foodsCA.changeCursor(foodsCur);
 		}
 	}

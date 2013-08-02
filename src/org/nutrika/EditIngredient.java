@@ -65,7 +65,7 @@ public class EditIngredient extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Cursor cur = db.ingredient();
+		Cursor cur = db.loadIngredient();
 		if (cur.moveToFirst()) {
 			title.setText(cur.getString(0));
 			amount.setText(cur.getString(1));

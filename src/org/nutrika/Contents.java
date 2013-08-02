@@ -45,7 +45,7 @@ public class Contents extends Activity {
 
 	public void onResume() {
 		super.onResume();
-		title.setText(db.contentsTitle());
+		title.setText(db.getContentsTitle());
 		new QueryDBTask().execute();
 		dialog = ProgressDialog.show(this, "", "Computing. Please wait...", true);
 	}
@@ -54,7 +54,7 @@ public class Contents extends Activity {
     	Cursor cur;
 
     	protected Void doInBackground(Void... params) {
-        	cur = db.contents();
+        	cur = db.loadContents();
         	return null;
         }
 

@@ -47,7 +47,6 @@ public class EditProduct extends Activity {
 	EditText price;
 	Button addItem, showContents;
 	ImageButton savePrice;
-	double priceval;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -69,9 +68,8 @@ public class EditProduct extends Activity {
 	public void onResume() {
 		super.onResume();
 		title.setText(db.productName);
-		priceval = db.productPrice();
-		price.setText(Double.toString(priceval));
-    	Cursor cur = db.ingredients();
+		price.setText(Double.toString(db.loadProductPrice()));
+    	Cursor cur = db.loadIngredients();
         int[] viewIDs = new int[]{R.id.contentsitem};
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.contentsitem, cur, db.ingredientsDataColumns, viewIDs, 0);
         ingredients.setAdapter(adapter);
@@ -96,7 +94,7 @@ public class EditProduct extends Activity {
 	    return true;
 	  case R.id.removeIngredient:
 		db.rmIngredient(info.id);
-		Cursor cur = db.ingredients();
+		Cursor cur = db.loadIngredients();
 		((SimpleCursorAdapter) ingredients.getAdapter()).changeCursor(cur);
 	    return true;
 	  default:

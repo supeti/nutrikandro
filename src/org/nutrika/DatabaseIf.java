@@ -70,7 +70,7 @@ public enum DatabaseIf {
 		"WHERE ndb_no=? AND (dri.nutr_no IS NULL OR lsg=cur_lsg AND min_age<=age AND age<max_age) ORDER BY sr_order;";
 	public long productId = 0;
 	public CharSequence productName;
-	public double productPrice = 0.0;
+	private double productPrice = 0.0;
 	public final String[] productsDataColumns = { "name" };
 	private final String productsQS = "SELECT _id,name FROM user.products ORDER BY name;";
 	private final String productsLikeQS = "SELECT _id,name,price FROM user.products WHERE name like ? ORDER BY name;";
@@ -174,19 +174,19 @@ public enum DatabaseIf {
 		db.close();
 	}
 
-	public Cursor foodGroups() {
+	public Cursor loadFoodGroups() {
 		return db.rawQuery(foodGroupsQS, null);
 	}
 
-	public Cursor foods() {
+	public Cursor loadFoods() {
 		return db.rawQuery(foodsQS, new String[] { String.valueOf(foodGroupId) });
 	}
 
-	public Cursor foodsLike(String like) {
+	public Cursor loadFoodsLike(String like) {
 		return db.rawQuery(foodsLikeQS, new String[] { String.valueOf(foodGroupId), "%" + like + "%" });
 	}
 
-	public CharSequence contentsTitle() {
+	public CharSequence getContentsTitle() {
 		switch (contentsOf) {
 		case FOOD: 
 			return new String("100g of " + foodDesc + " contains:");
@@ -198,7 +198,7 @@ public enum DatabaseIf {
 		return null;
 	}
 	
-	public Cursor contents() {
+	public Cursor loadContents() {
 		switch (contentsOf) {
 		case FOOD: 
 			return db.rawQuery(foodContentsQS, new String[] { String.valueOf(weight), String.valueOf(age),
@@ -223,21 +223,20 @@ public enum DatabaseIf {
 		productId = db.delete("user.products", "_id=?", new String[] { String.valueOf(productId) });
 	}
 
-	public Cursor products() {
+	public Cursor loadProducts() {
 		return db.rawQuery(productsQS, null);
 	}
 
-	public Cursor productsLike(String like) {
+	public Cursor loadProductsLike(String like) {
 		return db.rawQuery(productsLikeQS, new String[] { "%" + like + "%" });
 	}
 
-	public double productPrice() {
-		double price;
+	public double loadProductPrice() {
 		Cursor cur = db.rawQuery("select price from user.products where _id=?", new String[] { String.valueOf(productId) });
 		cur.moveToFirst();
-		price = cur.getDouble(0);
+		productPrice = cur.getDouble(0);
 		cur.close();
-		return price;
+		return productPrice;
 	}
 	
 	public void updateproduct(Double price) {
@@ -247,11 +246,11 @@ public enum DatabaseIf {
 		productPrice = price;
 	}
 
-	public Cursor ingredient() {
+	public Cursor loadIngredient() {
 		return db.rawQuery(ingredientQS, new String[] { String.valueOf(ingredientId) });
 	}
 
-	public Cursor ingredients() {
+	public Cursor loadIngredients() {
 		return db.rawQuery(ingredientsQS, new String[] { String.valueOf(productId) });
 	}
 	
@@ -286,7 +285,7 @@ public enum DatabaseIf {
 		db.update("user.plan", cv, "_id=?", new String[] { String.valueOf(planId) });
 	}
 
-	public Cursor plan() {
+	public Cursor loadPlan() {
 		return db.rawQuery(planQS, new String[] { });
 	}
 
