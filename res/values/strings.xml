@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="addImage">add image</string>
     <string name="addProductItem">Add Item</string>
     <string name="addProductLabel">Add Product: </string>
@@ -10,6 +11,7 @@
     <string name="appName">Nutrika</string>
     <string name="cancel">Cancel</string>
     <string name="contentsTitle">Nutrika - Contents </string>
+    <string name="daysLabel">Plan length in days:</string>
     <string name="deleteProductLabel">Delete Product</string>
     <string name="downloadingRef">downloading reference database</string>
     <string name="editIngredient">Edit Ingredient</string>
@@ -18,28 +20,32 @@
     <string name="editProductLabel">Edit Product</string>
     <string name="editProductTitle">Nutrika - Edit Product </string>
     <string name="extractingRef">extracting reference database</string>
+    <string name="finish">Finish</string>
     <string name="foodGroup">Group: </string>
     <string name="foodItems">Food Items</string>
     <string name="foodTitle">Nutrika - Foods </string>
+    <string name="g">g </string>
     <string name="itemLabel">Item: </string>
     <string name="lifeStageGroupLabel">Life Stage Group</string>
     <string name="likeLabel">Like: </string>
+    <string name="ok">OK</string>
+    <string name="plan">Plan</string>
     <string name="planItemTitle">Plan Item</string>
     <string name="planItemName">plan item name</string>
+    <string name="planTitle">Nutrika - Plan </string>
+    <string name="price">Price:</string>
     <string name="products">Products</string>
     <string name="productsTitle">Nutrika - Products </string>
-    <string name="price">Price:</string>
-    <string name="ok">OK</string>
+    <string name="quantity">Quantity: </string>
     <string name="removeIngredient">Remove Ingredient</string>
     <string name="removeItem">Remove Item</string>
     <string name="savePrice">save price</string>
+    <string name="searchImage">search image</string>
     <string name="settings">Settings</string>
     <string name="showContents">Show Contents</string>
-    <string name="plan">Plan</string>
-    <string name="planTitle">Nutrika - Plan </string>
-    <string name="searchImage">search image</string>
     <string name="settingsTitle">Nutrika - Settings </string>
     <string name="weightLabel">Weight</string>
+
     <string-array name="weightunits">
         <item>kg</item>
         <item>lb</item>
@@ -56,6 +62,5 @@
         <item>g</item>
         <item>oz</item>
     </string-array>
-    <string name="quantity">Quantity: </string>
-    <string name="daysLabel">Plan length in days:</string>
+
 </resources>

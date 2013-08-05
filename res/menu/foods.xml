@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="@string/showContents" android:id="@+id/showFoodContents"></item>
-    <item android:title="@string/addToProduct" android:id="@+id/addToProduct" android:enabled="false"></item>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/showFoodContents"
+        android:title="@string/showContents">
+    </item>
+    <item
+        android:id="@+id/addToProduct"
+        android:enabled="false"
+        android:title="@string/addToProduct">
+    </item>
+
 </menu>

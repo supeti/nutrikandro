@@ -1,14 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:clickable="false">
-	<LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content"  style="?android:attr/buttonBarButtonStyle">
-	    <Button style="?android:attr/buttonBarButtonStyle" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/settings" android:id="@+id/settings"></Button>
-	    <Button style="?android:attr/buttonBarButtonStyle" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/foodItems" android:id="@+id/foods"></Button>
-	    <Button style="?android:attr/buttonBarButtonStyle" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/plan" android:id="@+id/plan"></Button>
-	</LinearLayout>
-    <LinearLayout android:id="@+id/linearLayout1" android:layout_width="match_parent" android:layout_height="wrap_content">
-        <EditText android:inputType="text" android:layout_width="0dip" android:layout_height="wrap_content" android:layout_weight="1" android:id="@+id/productET"></EditText>
-        <ImageButton android:layout_width="wrap_content" android:src="@android:drawable/ic_menu_search" android:id="@+id/selectProduct" android:layout_height="match_parent" android:contentDescription="@string/searchImage"></ImageButton>
-        <ImageButton android:layout_width="wrap_content" android:src="@android:drawable/ic_menu_add" android:layout_height="match_parent" android:id="@+id/addProduct" android:contentDescription="@string/addImage"></ImageButton>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clickable="false"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/settings"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings" >
+        </Button>
+
+        <Button
+            android:id="@+id/foods"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/foodItems" >
+        </Button>
+
+        <Button
+            android:id="@+id/plan"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/plan" >
+        </Button>
     </LinearLayout>
-    <ListView android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/products"></ListView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/productET"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="text" >
+        </EditText>
+
+        <ImageButton
+            android:id="@+id/selectProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/searchImage"
+            android:src="@android:drawable/ic_menu_search" >
+        </ImageButton>
+
+        <ImageButton
+            android:id="@+id/addProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/addImage"
+            android:src="@android:drawable/ic_menu_add" >
+        </ImageButton>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/products"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
 </LinearLayout>

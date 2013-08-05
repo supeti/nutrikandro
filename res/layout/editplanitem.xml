@@ -3,14 +3,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/editPlanItemTitle" android:textStyle="bold" android:textIsSelectable="false"></TextView>
-    
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" >
-        <EditText android:id="@+id/editPlanItemQuatity" android:layout_weight="1" android:layout_width="0dip" android:layout_height="wrap_content" android:ems="10" android:inputType="numberDecimal"></EditText>
-        <TextView android:id="@+id/editPlanItemName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/planItemName" />
+
+    <TextView
+        android:id="@+id/editPlanItemTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="false"
+        android:textStyle="bold" >
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/editPlanItemQuatity"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/editPlanItemName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/planItemName" />
     </LinearLayout>
-    <LinearLayout android:id="@+id/linearLayout2" android:layout_width="match_parent" android:layout_height="wrap_content" style="android:attr/buttonBarStyle">
-        <Button android:layout_weight="1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/editPlanItemOK" android:text="@string/ok" style="?android:attr/buttonBarButtonStyle"></Button>
-        <Button android:layout_weight="1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/editPlanItemCancel" android:text="@string/cancel" style="?android:attr/buttonBarButtonStyle"></Button>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        style="android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/editPlanItemOK"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ok" >
+        </Button>
+
+        <Button
+            android:id="@+id/editPlanItemCancel"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel" >
+        </Button>
     </LinearLayout>
+
 </LinearLayout>

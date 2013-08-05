@@ -4,7 +4,7 @@
     android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/planItemQuantity"
+        android:id="@+id/ingredientAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="5.0sp"
@@ -13,7 +13,17 @@
     </TextView>
 
     <TextView
-        android:id="@+id/planItemName"
+        android:id="@+id/ingredientUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="1.0sp"
+        android:text="@string/g"
+        android:textColor="#dd3"
+        android:textIsSelectable="false" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/ingredientDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="5.0sp"

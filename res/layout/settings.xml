@@ -1,26 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent" android:orientation="vertical">
-    <LinearLayout android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:layout_width="match_parent">
-        <TextView android:text="@string/lifeStageGroupLabel" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-        <Spinner android:id="@+id/lifeStageGroupSpin" android:layout_height="wrap_content" android:layout_width="match_parent"></Spinner>
-    </LinearLayout>
-    <TextView android:id="@+id/agetv" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/ageLabel"></TextView>
-    <SeekBar android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/agesb"></SeekBar>
-    <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout2" android:layout_height="wrap_content">
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/weightLabel" android:id="@+id/eaterweight"></TextView>
-    </LinearLayout>
-    <SeekBar android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/weightSB"></SeekBar>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
-    <LinearLayout android:id="@+id/linearLayout3" android:layout_height="wrap_content" android:layout_width="match_parent">
-	    <TextView android:id="@+id/daystv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/daysLabel" />
-	    <EditText android:id="@+id/days" android:layout_width="match_parent" android:layout_height="wrap_content" android:ems="10" android:inputType="number" ></EditText>
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lifeStageGroupLabel" >
+        </TextView>
+
+        <Spinner
+            android:id="@+id/lifeStageGroupSpin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </Spinner>
     </LinearLayout>
-    
-    <LinearLayout android:id="@+id/linearLayout4" android:layout_width="match_parent" android:layout_height="wrap_content" style="android:attr/buttonBarStyle">
-        <Button android:layout_weight="1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/ok" android:id="@+id/settingsOK" style="?android:attr/buttonBarButtonStyle"></Button>
-        <Button android:layout_weight="1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/settingsCancel" android:text="@string/cancel" style="?android:attr/buttonBarButtonStyle"></Button>
+
+    <TextView
+        android:id="@+id/agetv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ageLabel" >
+    </TextView>
+
+    <SeekBar
+        android:id="@+id/agesb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </SeekBar>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/eaterweight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/weightLabel" >
+        </TextView>
     </LinearLayout>
+
+    <SeekBar
+        android:id="@+id/weightSB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </SeekBar>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/daystv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/daysLabel" />
+
+        <EditText
+            android:id="@+id/days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number" >
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        style="android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/settingsOK"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ok" >
+        </Button>
+
+        <Button
+            android:id="@+id/settingsCancel"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel" >
+        </Button>
+    </LinearLayout>
+
 </LinearLayout>

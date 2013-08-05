@@ -18,36 +18,33 @@
 package org.nutrika;
 
 import android.app.Activity;
-import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 public class EditIngredient extends Activity {
-	Context context = this;
+	static final float OZ2G = 28.35f;
+	public static final String AMOUNT = "amount";
+	public static final String DESCRIPTION = "description";
 	DatabaseIf db = DatabaseIf.INSTANCE;
-	TextView title;
 	Spinner units;
-	ListView ingredients;
 	EditText amount;
-	Button ok, cancel;
 	long unit = 0;
-	float oz2g = 28.35f;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.editingredient);
-		title = (TextView) findViewById(R.id.editIngredientTitle);
+		Bundle extras = getIntent().getExtras();
+		amount = (EditText) findViewById(R.id.editIngredientWeight);
+		amount.setText(extras.getString(AMOUNT));
+		((TextView) findViewById(R.id.editIngredientTitle)).setText(extras.getString(DESCRIPTION));
 		units = (Spinner) findViewById(R.id.editIngredientUnit);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ingredientUnits,
 				android.R.layout.simple_spinner_item);
@@ -55,23 +52,8 @@ public class EditIngredient extends Activity {
 		units.setAdapter(adapter);
 		units.setOnItemSelectedListener(new UnitsCallBack());
 
-		amount = (EditText) findViewById(R.id.editIngredientWeight);
-		ok = (Button) findViewById(R.id.editIngredientOK);
-		ok.setOnClickListener(new OKCallBack());
-		cancel = (Button) findViewById(R.id.editIngredientCancel);
-		cancel.setOnClickListener(new CancelCallBack());
-
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		Cursor cur = db.loadIngredient();
-		if (cur.moveToFirst()) {
-			title.setText(cur.getString(0));
-			amount.setText(cur.getString(1));
-		}
-		cur.close();
+		findViewById(R.id.editIngredientOK).setOnClickListener(new OKCallBack());
+		findViewById(R.id.editIngredientCancel).setOnClickListener(new CancelCallBack());
 	}
 
 	class UnitsCallBack implements OnItemSelectedListener {
@@ -85,7 +67,7 @@ public class EditIngredient extends Activity {
 
 	class OKCallBack implements OnClickListener {
 		public void onClick(View v) {
-			db.updateIngredient(Float.valueOf(amount.getText().toString()) * (0 == unit ? 1 : oz2g));
+			db.updateIngredient(Float.valueOf(amount.getText().toString()) * (0 == unit ? 1 : OZ2G));
 			finish();
 		}
 	}

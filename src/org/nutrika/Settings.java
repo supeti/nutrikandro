@@ -18,15 +18,12 @@
 package org.nutrika;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -34,9 +31,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class Settings extends Activity {
-	Context context = this;
 	DatabaseIf db = DatabaseIf.INSTANCE;
-	SharedPreferences settings;
 	Spinner lifeStageGroup;
 	TextView ageTV;
 	SeekBar agesb;
@@ -81,11 +76,8 @@ public class Settings extends Activity {
 		weightsb.setMax(120);
 		daysET.setText(db.getDays());
 
-		Button button = (Button) findViewById(R.id.settingsOK);
-		button.setOnClickListener(new OKCallBack());
-		button = (Button) findViewById(R.id.settingsCancel);
-		button.setOnClickListener(new CancelCallBack());
-
+		findViewById(R.id.settingsOK).setOnClickListener(new OKCallBack());
+		findViewById(R.id.settingsCancel).setOnClickListener(new CancelCallBack());
 	}
 
 	class LifeStageGroupCallBack implements OnItemSelectedListener {

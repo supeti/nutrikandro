@@ -1,19 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent" android:orientation="vertical">
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/editProductTitle" android:textStyle="bold" android:textIsSelectable="false"></TextView>
-    
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" >
-        <TextView android:id="@+id/editProductPriceLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/price" />
-        <EditText android:id="@+id/editProductPrice" android:layout_weight="1" android:layout_width="0dip" android:layout_height="wrap_content" android:ems="10" android:inputType="numberDecimal"></EditText>
-        <ImageButton android:id="@+id/savePrice" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@android:drawable/ic_menu_save" android:contentDescription="@string/savePrice"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/editProductTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="false"
+        android:textStyle="bold" >
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/editProductPriceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/price" />
+
+        <EditText
+            android:id="@+id/editProductPrice"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal" >
+        </EditText>
+
+        <ImageButton
+            android:id="@+id/savePrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/savePrice"
+            android:src="@android:drawable/ic_menu_save" />
     </LinearLayout>
 
-    <LinearLayout android:layout_height="wrap_content" android:id="@+id/linearLayout1" android:layout_width="match_parent" android:orientation="horizontal" style="android:attr/buttonBarStyle">
-        <Button android:layout_height="wrap_content" android:text="@string/addProductItem" android:layout_weight="1" android:id="@+id/addProductItem" android:layout_width="0dip" style="?android:attr/buttonBarButtonStyle"></Button>
-        <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/showContents" android:id="@+id/showEditProductContents" style="?android:attr/buttonBarButtonStyle"></Button>
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        style="android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/addProductItem"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/addProductItem" >
+        </Button>
+
+        <Button
+            android:id="@+id/showEditProductContents"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/showContents" >
+        </Button>
+
+        <Button
+            android:id="@+id/finishEditProduct"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/finish" >
+        </Button>
     </LinearLayout>
-    <ListView android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/ingredients" android:choiceMode="singleChoice"></ListView>
+
+    <ListView
+        android:id="@+id/ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:choiceMode="singleChoice" >
+    </ListView>
+
 </LinearLayout>

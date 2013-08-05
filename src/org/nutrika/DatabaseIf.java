@@ -36,11 +36,11 @@ public enum DatabaseIf {
 	private final String PREF_WEIGHT = "weight";
 	private final String PREF_DAYS = "days";
 
-	public enum ContentsOf {
+	public enum ContentsType {
 		FOOD, PRODUCT, PLAN
 	}
 
-	ContentsOf contentsOf;
+	ContentsType contentsType;
 
 	private String DB_PATH;
 	public String REF_NAME, REFGZ_NAME, ASSET_USER_NAME, USER_NAME;
@@ -50,7 +50,7 @@ public enum DatabaseIf {
 	private SQLiteDatabase db;
 
 	private String attachUserDB;
-	private double productPrice = 0.0;
+	private String productPrice = "0.0";
 
 	// Cursor foodsCur, foodsLikeCur;
 
@@ -191,7 +191,7 @@ public enum DatabaseIf {
 	}
 
 	public CharSequence getContentsTitle() {
-		switch (contentsOf) {
+		switch (contentsType) {
 		case FOOD:
 			return new String("100g of " + foodDesc + " contains:");
 		case PRODUCT:
@@ -239,7 +239,7 @@ public enum DatabaseIf {
 			+ "GROUP BY nutr_data.nutr_no,units,nutrdesc,sr_order ORDER BY sr_order;";
 
 	public Cursor loadContents() {
-		switch (contentsOf) {
+		switch (contentsType) {
 		case FOOD:
 			return db.rawQuery(foodContentsQS, new String[] { String.valueOf(weight), String.valueOf(age),
 					String.valueOf(lifeStageGroupId), foodItemId });
@@ -273,6 +273,7 @@ public enum DatabaseIf {
 		ContentValues cv = new ContentValues();
 		cv.put("name", product);
 		productId = String.valueOf(db.insertWithOnConflict("user.products", null, cv, SQLiteDatabase.CONFLICT_IGNORE));
+		productName = product;
 	}
 
 	public void deleteProduct() {
@@ -293,26 +294,26 @@ public enum DatabaseIf {
 
 	private final String productPriceQS = "select price from user.products where _id=?";
 
-	public double loadProductPrice() {
+	public String loadProductPrice() {
 		Cursor cur = db.rawQuery(productPriceQS, new String[] { productId });
 		cur.moveToFirst();
-		productPrice = cur.getDouble(0);
+		productPrice = cur.getString(0);
 		cur.close();
 		return productPrice;
 	}
 
-	public void updateproduct(Double price) {
-		ContentValues cv = new ContentValues();
-		cv.put("price", price);
-		db.update("user.products", cv, "_id=?", new String[] { productId });
+	public void updateproduct(String price) {
 		productPrice = price;
+		ContentValues cv = new ContentValues();
+		cv.put("price", productPrice);
+		db.update("user.products", cv, "_id=?", new String[] { productId });
 	}
 
 	private String ingredientId = "0";
 	public void setIngredientId (long ingredientId) {
 		this.ingredientId = String.valueOf(ingredientId);
 	}
-
+/*
 	public final String[] ingredientDataColumns = { "food", "amount" };
 	private final String ingredientQS = "SELECT long_desc AS food,amount FROM user.ingredients AS i "
 			+ "JOIN food_desc AS f ON i.ndb_no=f._id WHERE i._id=?;";
@@ -320,9 +321,9 @@ public enum DatabaseIf {
 	public Cursor loadIngredient() {
 		return db.rawQuery(ingredientQS, new String[] { ingredientId });
 	}
-
-	public final String[] ingredientsDataColumns = { "ingredient" };
-	private final String ingredientsQS = "SELECT i._id,amount||'g '||long_desc AS ingredient "
+*/
+	public final String[] ingredientsDataColumns = { "amount", "long_desc" };
+	private final String ingredientsQS = "SELECT i._id,amount,long_desc "
 			+ "FROM user.ingredients AS i JOIN food_desc ON i.ndb_no=food_desc._id "
 			+ "WHERE product=? ORDER BY long_desc;";
 

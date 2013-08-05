@@ -17,23 +17,19 @@
 
 package org.nutrika;
 
-import org.nutrika.DatabaseIf.ContentsOf;
+import org.nutrika.DatabaseIf.ContentsType;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -42,70 +38,53 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class Foods extends Activity {
-	Context context = this;
 	DatabaseIf db = DatabaseIf.INSTANCE;
-	Spinner foodGroupSpin;
-	ListView foods;
 	SimpleCursorAdapter foodsCA;
 	EditText foodLike;
-	MenuItem addToproduct;
-	Cursor foodGroupsCur, foodsCur;
 
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.foods);
-		Cursor foodGroupsCur = db.loadFoodGroups();
 		int[] viewIDs = new int[] { android.R.id.text1 };
-		final SimpleCursorAdapter ca = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, foodGroupsCur,
+		final SimpleCursorAdapter ca = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, db.loadFoodGroups(),
 				db.foodGroupsDataColumns, viewIDs, 0);
 		ca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		Spinner foodGroupSpin = (Spinner) findViewById(R.id.foodGroup);
 		foodGroupSpin.setAdapter(ca);
 		foodGroupSpin.setOnItemSelectedListener(new FoodGroupCallBack());
 		foodLike = (EditText) findViewById(R.id.foodLike);
-		ImageButton ib = (ImageButton) findViewById(R.id.selectFood);
-		ib.setOnClickListener(new SelectFoodCallBack());
-		foodsCur = db.loadFoods();
+		((ImageButton) findViewById(R.id.selectFood)).setOnClickListener(new SelectFoodCallBack());
 		viewIDs = new int[] { android.R.id.text1 };
-		foodsCA = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, foodsCur, db.foodDescDataColumns, viewIDs, 0);
-		foods = (ListView) findViewById(R.id.foods);
+		foodsCA = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, db.loadFoods(), db.foodDescDataColumns, viewIDs, 0);
+		ListView foods = (ListView) findViewById(R.id.foods);
 		foods.setAdapter(foodsCA);
     	registerForContextMenu(foods);
-		Button button = (Button) findViewById(R.id.settings);
-		button.setOnClickListener(new SettingsCallBack());
-		button = (Button) findViewById(R.id.products);
-		button.setOnClickListener(new ProductsCallBack());
-		button = (Button) findViewById(R.id.plan);
-		button.setOnClickListener(new PlanCallBack());
-	}
-
-	public void onResume() {
-		super.onResume();
-	}
-	
-	public void onDestroy() {
-		foodsCur.close();
-		super.onDestroy();
+		findViewById(R.id.settings).setOnClickListener(new Activator(Settings.class));
+		findViewById(R.id.products).setOnClickListener(new Activator(Products.class));
+		findViewById(R.id.plan).setOnClickListener(new Activator(Plan.class));
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+		db.contentsType = ContentsType.FOOD;
+	}
+	
+	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 	  super.onCreateContextMenu(menu, v, menuInfo);
-	  MenuInflater inflater = getMenuInflater();
-	  inflater.inflate(R.menu.foods, menu);
+	  getMenuInflater().inflate(R.menu.foods, menu);
 	  if (db.isProductSelected()) menu.findItem(R.id.addToProduct).setEnabled(true);
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		Intent intent;
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 		db.setFoodItem(info.id, ((TextView) info.targetView).getText());
 		switch (item.getItemId()) {
 		case R.id.showFoodContents:
-			db.contentsOf = ContentsOf.FOOD;
-			intent = new Intent(context, Contents.class);
-			startActivity(intent);
+			startActivity(new Intent(this, Contents.class));
 			return true;
 		case R.id.addToProduct:
 			db.addIngredient(100.0);
@@ -120,8 +99,7 @@ public class Foods extends Activity {
     class FoodGroupCallBack implements OnItemSelectedListener {
 		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 			db.setFoodGroupId(id);
-			foodsCur = db.loadFoods();
-			foodsCA.changeCursor(foodsCur);
+			foodsCA.changeCursor(db.loadFoods());
 			foodLike.setText("");
 		}
 
@@ -131,54 +109,19 @@ public class Foods extends Activity {
 
 	class SelectFoodCallBack implements OnClickListener {
 		public void onClick(View v) {
-			foodsCur = db.loadFoodsLike(foodLike.getText().toString());
-			foodsCA.changeCursor(foodsCur);
+			foodsCA.changeCursor(db.loadFoodsLike(foodLike.getText().toString()));
 		}
 	}
 
-	class ShowFoodContentsCallBack implements OnClickListener {
+	class Activator implements OnClickListener {
+		Class<?> c;
+		
+		Activator (Class<?> c) {
+			this.c = c;
+		}
+		
 		public void onClick(View v) {
-			db.contentsOf = ContentsOf.FOOD;
-			Intent intent = new Intent(context, Contents.class);
-			startActivity(intent);
-		}
-	}
-
-	class AddToProductCallBack implements OnClickListener {
-		public void onClick(View v) {
-			db.addIngredient(100.0);
-			setResult(RESULT_OK);
-			finish();
-		}
-	}
-
-	class FoodItemCallBack implements OnItemSelectedListener {
-		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-			db.setFoodItem(id, ((TextView) view).getText());
-		}
-
-		public void onNothingSelected(AdapterView<?> arg0) {
-		}
-	}
-
-    class SettingsCallBack implements OnClickListener {
-		public void onClick(View v) {
-			Intent intent = new Intent(context, Settings.class);
-			startActivity(intent);
-		}
-	}
-
-    class ProductsCallBack implements OnClickListener {
-		public void onClick(View v) {
-			Intent intent = new Intent(context, Products.class);
-			startActivity(intent);
-		}
-	}
-
-    class PlanCallBack implements OnClickListener {
-		public void onClick(View v) {
-			Intent intent = new Intent(context, Plan.class);
-			startActivity(intent);
+			startActivity(new Intent(Foods.this, c));
 		}
 	}
 }

@@ -1,15 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent" android:orientation="vertical">
-    <TextView android:id="@+id/editIngredientTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textIsSelectable="false"></TextView>
-    <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/linearLayout1">
-        <EditText android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/editIngredientWeight" android:inputType="numberDecimal"></EditText>
-        <Spinner android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/editIngredientUnit"></Spinner>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/editIngredientTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="false" >
+    </TextView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/editIngredientWeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal" >
+        </EditText>
+
+        <Spinner
+            android:id="@+id/editIngredientUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </Spinner>
     </LinearLayout>
-    <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/linearLayout2" style="android:attr/buttonBarStyle">
-        <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/editIngredientOK" android:text="@string/ok" android:layout_weight="1" style="?android:attr/buttonBarButtonStyle"></Button>
-        <Button android:text="@string/cancel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/editIngredientCancel" android:layout_weight="1" style="?android:attr/buttonBarButtonStyle"></Button>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        style="android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/editIngredientOK"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ok" >
+        </Button>
+
+        <Button
+            android:id="@+id/editIngredientCancel"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel" >
+        </Button>
     </LinearLayout>
+
 </LinearLayout>

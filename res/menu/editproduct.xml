@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/editIngredient" android:title="@string/editIngredient"></item>
-    <item android:title="@string/removeIngredient" android:id="@+id/removeIngredient"></item>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/editIngredient"
+        android:title="@string/editIngredient">
+    </item>
+    <item
+        android:id="@+id/removeIngredient"
+        android:title="@string/removeIngredient">
+    </item>
+
 </menu>

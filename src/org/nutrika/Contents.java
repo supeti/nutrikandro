@@ -19,7 +19,6 @@ package org.nutrika;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,14 +27,11 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class Contents extends Activity {
-	Context context = this;
 	DatabaseIf db = DatabaseIf.INSTANCE;
 	ListView contents;
 	TextView title;
 	ProgressDialog dialog;
 	
-	static final int DIALOG_COMPUTING_ID = 0;
-
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
     	setContentView(R.layout.contents);
@@ -63,7 +59,7 @@ public class Contents extends Activity {
 
 		protected void onPostExecute(Void result) {
             int[] viewIDs = new int[]{R.id.contentsitem};
-            SimpleCursorAdapter adapter = new SimpleCursorAdapter(context, R.layout.contentsitem, cur, db.contentsDataColumns, viewIDs, 0);
+            SimpleCursorAdapter adapter = new SimpleCursorAdapter(Contents.this, R.layout.contentsitem, cur, db.contentsDataColumns, viewIDs, 0);
         	contents.setAdapter(adapter);
 			dialog.dismiss();
         }
