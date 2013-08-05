@@ -157,6 +157,7 @@ public enum DatabaseIf {
 	}
 
 	private String foodGroupId = "100";
+	private int foodGroupPos = 0;
 
 	private String foodItemId = "0";
 	private CharSequence foodDesc;
@@ -166,8 +167,13 @@ public enum DatabaseIf {
 		this.foodDesc = foodDesc;
 	}
 
-	public void setFoodGroupId(long id) {
+	public int getFoodGroupPos() {
+		return foodGroupPos;
+	}
+
+	public void setFoodGroupId(long id, int position) {
 		foodGroupId = String.valueOf(id);
+		foodGroupPos = position;
 	}
 
 	public final String[] foodGroupsDataColumns = { "description" };
@@ -177,17 +183,21 @@ public enum DatabaseIf {
 		return db.rawQuery(foodGroupsQS, null);
 	}
 
+	private String foodsLike = "";
 	public final String[] foodDescDataColumns = { "long_desc" };
-	private final String foodsQS = "SELECT _id,long_desc FROM food_desc WHERE fdgrp=? ORDER BY long_desc;";
-
-	public Cursor loadFoods() {
-		return db.rawQuery(foodsQS, new String[] { foodGroupId });
-	}
-
 	private final String foodsLikeQS = "SELECT _id,long_desc FROM food_desc WHERE fdgrp=? AND long_desc like ? ORDER BY long_desc;";
 
+	public Cursor loadFoods() {
+		return db.rawQuery(foodsLikeQS, new String[] { foodGroupId, "%" + foodsLike + "%" });
+	}
+
 	public Cursor loadFoodsLike(String like) {
+		foodsLike = like;
 		return db.rawQuery(foodsLikeQS, new String[] { foodGroupId, "%" + like + "%" });
+	}
+	
+	public String getFoodsLike() {
+		return foodsLike;
 	}
 
 	public CharSequence getContentsTitle() {
@@ -255,8 +265,8 @@ public enum DatabaseIf {
 
 	private String productId = "0";
 	private CharSequence productName;
-	
-	public CharSequence getProductName () {
+
+	public CharSequence getProductName() {
 		return productName;
 	}
 
@@ -310,18 +320,20 @@ public enum DatabaseIf {
 	}
 
 	private String ingredientId = "0";
-	public void setIngredientId (long ingredientId) {
+
+	public void setIngredientId(long ingredientId) {
 		this.ingredientId = String.valueOf(ingredientId);
 	}
-/*
-	public final String[] ingredientDataColumns = { "food", "amount" };
-	private final String ingredientQS = "SELECT long_desc AS food,amount FROM user.ingredients AS i "
-			+ "JOIN food_desc AS f ON i.ndb_no=f._id WHERE i._id=?;";
 
-	public Cursor loadIngredient() {
-		return db.rawQuery(ingredientQS, new String[] { ingredientId });
-	}
-*/
+	/*
+	 * public final String[] ingredientDataColumns = { "food", "amount" };
+	 * private final String ingredientQS =
+	 * "SELECT long_desc AS food,amount FROM user.ingredients AS i " +
+	 * "JOIN food_desc AS f ON i.ndb_no=f._id WHERE i._id=?;";
+	 * 
+	 * public Cursor loadIngredient() { return db.rawQuery(ingredientQS, new
+	 * String[] { ingredientId }); }
+	 */
 	public final String[] ingredientsDataColumns = { "amount", "long_desc" };
 	private final String ingredientsQS = "SELECT i._id,amount,long_desc "
 			+ "FROM user.ingredients AS i JOIN food_desc ON i.ndb_no=food_desc._id "
@@ -350,6 +362,7 @@ public enum DatabaseIf {
 	}
 
 	private String planId = "0";
+
 	public void setPlanId(long planId) {
 		this.planId = String.valueOf(planId);
 	}

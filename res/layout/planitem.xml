@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:minHeight="42dip" >
 
     <TextView
         android:id="@+id/planItemQuantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:paddingLeft="5.0sp"
         android:textColor="#dd3"
-        android:textIsSelectable="false" >
+        android:textIsSelectable="false"
+        android:textSize="20sp" >
     </TextView>
 
     <TextView
         android:id="@+id/planItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:paddingLeft="5.0sp"
-        android:textIsSelectable="false" >
+        android:textColor="#eee"
+        android:textIsSelectable="false"
+        android:textSize="20sp" >
     </TextView>
 
 </LinearLayout>

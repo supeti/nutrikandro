@@ -47,19 +47,22 @@ public class Foods extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.foods);
 		int[] viewIDs = new int[] { android.R.id.text1 };
-		final SimpleCursorAdapter ca = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, db.loadFoodGroups(),
-				db.foodGroupsDataColumns, viewIDs, 0);
+		final SimpleCursorAdapter ca = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, db
+				.loadFoodGroups(), db.foodGroupsDataColumns, viewIDs, 0);
 		ca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		Spinner foodGroupSpin = (Spinner) findViewById(R.id.foodGroup);
 		foodGroupSpin.setAdapter(ca);
 		foodGroupSpin.setOnItemSelectedListener(new FoodGroupCallBack());
+		foodGroupSpin.setSelection(db.getFoodGroupPos());
 		foodLike = (EditText) findViewById(R.id.foodLike);
+		foodLike.setText(db.getFoodsLike());
 		((ImageButton) findViewById(R.id.selectFood)).setOnClickListener(new SelectFoodCallBack());
 		viewIDs = new int[] { android.R.id.text1 };
-		foodsCA = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, db.loadFoods(), db.foodDescDataColumns, viewIDs, 0);
+		foodsCA = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, db.loadFoods(),
+				db.foodDescDataColumns, viewIDs, 0);
 		ListView foods = (ListView) findViewById(R.id.foods);
 		foods.setAdapter(foodsCA);
-    	registerForContextMenu(foods);
+		registerForContextMenu(foods);
 		findViewById(R.id.settings).setOnClickListener(new Activator(Settings.class));
 		findViewById(R.id.products).setOnClickListener(new Activator(Products.class));
 		findViewById(R.id.plan).setOnClickListener(new Activator(Plan.class));
@@ -70,12 +73,13 @@ public class Foods extends Activity {
 		super.onResume();
 		db.contentsType = ContentsType.FOOD;
 	}
-	
+
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-	  super.onCreateContextMenu(menu, v, menuInfo);
-	  getMenuInflater().inflate(R.menu.foods, menu);
-	  if (db.isProductSelected()) menu.findItem(R.id.addToProduct).setEnabled(true);
+		super.onCreateContextMenu(menu, v, menuInfo);
+		getMenuInflater().inflate(R.menu.foods, menu);
+		if (db.isProductSelected())
+			menu.findItem(R.id.addToProduct).setEnabled(true);
 	}
 
 	@Override
@@ -96,11 +100,10 @@ public class Foods extends Activity {
 		}
 	}
 
-    class FoodGroupCallBack implements OnItemSelectedListener {
+	class FoodGroupCallBack implements OnItemSelectedListener {
 		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-			db.setFoodGroupId(id);
+			db.setFoodGroupId(id, position);
 			foodsCA.changeCursor(db.loadFoods());
-			foodLike.setText("");
 		}
 
 		public void onNothingSelected(AdapterView<?> arg0) {
@@ -115,11 +118,11 @@ public class Foods extends Activity {
 
 	class Activator implements OnClickListener {
 		Class<?> c;
-		
-		Activator (Class<?> c) {
+
+		Activator(Class<?> c) {
 			this.c = c;
 		}
-		
+
 		public void onClick(View v) {
 			startActivity(new Intent(Foods.this, c));
 		}
